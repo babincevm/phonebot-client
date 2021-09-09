@@ -1,0 +1,83 @@
+.button {
+  width: var(--button-width);
+  height: var(--button-height);
+  border-radius: var(--border-radius);
+  border: 1px solid var(--button-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  background: var(--button-background);
+  cursor: pointer;
+  transition: all var(--transition-timing) var(--transition-function);
+}
+
+
+.tabs {
+  position: relative;
+  height: 50px;
+  &__list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: 100%;
+  }
+
+  &__tab {
+    width: auto;
+  }
+
+  &__active-background {
+    position: absolute;
+    top: var(--top);
+    bottom: var(--bottom);
+    right: var(--right);
+    left: var(--left);
+    background-color: var(--red);
+    z-index: 1;
+  }
+}
+
+
+.smooth {
+  &-background {
+    position: absolute;
+    top: var(--top);
+    left: var(--left);
+    height: var(--height);
+    width: var(--width);
+    background-color: var(--background);
+    transition: all var(--transition-timing);
+
+    &__container {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    &__wrapper {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
+
+
+.form {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  &__buttons-container {
+    margin-top: auto;
+  }
+}
