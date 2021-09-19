@@ -24,8 +24,8 @@
 </template>
 
 <script>
-import PForm from "../../components/FormComponents/PForm";
-import PTabs from "../../components/UIComponents/PTabs";
+import PForm from "../../components/FormComponents/PForm/PForm";
+import PTabs from "../../components/UIComponents/PTabs/PTabs";
 import { setStyleProperty } from "../../helpers/functions.mjs";
 import { mapActions } from "vuex";
 
@@ -102,7 +102,7 @@ export default {
       let isToLeft = this.activeTab === 0;
       setStyleProperty(this.$root.$el, [
         {
-          property: "translate-enter-form",
+          property: "translate-enter-from",
           value: `${isToLeft ? "-100" : "100"}%`,
         },
         {
@@ -122,6 +122,11 @@ export default {
 
 <style src="./style.scss" lang="scss"></style>
 <style lang="scss">
+body {
+  width: 100vw;
+  height: 100vh;
+}
+
 .tabs__list {
   position: relative;
   z-index: 2;

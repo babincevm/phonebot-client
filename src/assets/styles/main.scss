@@ -1,25 +1,30 @@
 @import "variables";
 @import "transitions";
+@import "animations";
 @import "reset";
 
 body {
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
+  //overflow: scroll;
+  position: relative;
 }
 
 #app {
-  width: 100%;
-  height: 100%;
-  overflow-y: scroll;
+  //width: 100%;
+  //height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 }
-
 
 .container {
   width: 100%;
   height: 100%;
   padding: 0 20px;
+  max-width: 1640px;
+  margin: 0 auto;
+}
+
+.no-scroll {
+  overflow: hidden;
 }

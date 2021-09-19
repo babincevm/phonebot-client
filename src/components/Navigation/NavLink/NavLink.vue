@@ -3,8 +3,8 @@
     class="navigation__link-wrapper"
     @mouseenter="mouseEnter"
     @mouseleave="mouseLeave"
+    @click="$emit('click', $el)"
   >
-    <div class="circle"></div>
     <router-link
       :to="path"
       class="navigation__link"

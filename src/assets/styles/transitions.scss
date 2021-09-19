@@ -18,29 +18,54 @@
 
 .slide-x-vars {
   &-enter {
-    transform: translateX(var(--translate-enter-form));
+    transform: translateX(var(--translate-enter-from));
+    opacity: var(--opacity-from);
     &-active {
-      width: 100%;
       position: absolute;
-      top: 0;
-      bottom: 0;
       transition: transform var(--transition-timing);
     }
     &-to {
       transform: translateX(0);
+      opacity: 1;
     }
   }
   &-leave {
     transform: translateX(0);
+    opacity: 1;
     &-active {
       position: absolute;
-      top: 0;
-      bottom: 0;
-      width: 100%;
       transition: transform var(--transition-timing);
     }
     &-to {
       transform: translateX(var(--translate-leave-to));
+      opacity: var(--opacity-from);
+    }
+  }
+}
+
+.slide-y-vars {
+  &-enter {
+    transform: translateY(var(--translate-enter-from));
+    opacity: var(--opacity-from);
+    &-active {
+      position: absolute;
+      transition: var(--transition-timing);
+    }
+    &-to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  &-leave {
+    transform: translateY(0);
+    opacity: 1;
+    &-active {
+      position: absolute;
+      transition: var(--transition-timing);
+    }
+    &-to {
+      transform: translateY(var(--translate-leave-to));
+      opacity: var(--opacity-from);
     }
   }
 }

@@ -5,34 +5,40 @@
       ref="wrapper"
       :class="{
         'input__wrapper--has-value':
-          !this.isFocused && this.value.trim().length > 0,
-        'input__wrapper--correct': this.isCorrect === true,
-        'input__wrapper--incorrect': this.isCorrect === false,
-        'input__wrapper--focused': this.isFocused,
+          (currentValue === null && value !== null) ||
+          (!isFocused && currentValue.trim().length > 0),
+        'input__wrapper--correct': isCorrect === true,
+        'input__wrapper--incorrect': isCorrect === false,
+        'input__wrapper--focused': isFocused,
       }"
+      v-if="value !== null"
     >
       <input
         :type="type"
         :name="name"
         :id="name"
+        ref="input"
         :placeholder="placeholder"
         class="input"
-        @input="$emit('input', value)"
+        @input="changed"
         @focusin="focus"
         @focusout="focusout"
-        v-model="value"
+        v-model="currentValue"
       />
       <label :for="name" v-if="$slots.label" class="input__label">
         <span>
           <slot name="label"></slot>
-          <span class="input__label-required">{{ this.required && "*" }} </span>
+          <span class="input__label-required" v-if="required">*</span>
         </span>
       </label>
     </div>
+    <skeleton v-else></skeleton>
   </div>
 </template>
 
 <script>
+import Skeleton from "@/components/UIComponents/Skeleton/Skeleton";
+
 export default {
   name: "TextInput",
   props: {
@@ -97,14 +103,23 @@ export default {
       required: false,
       default: false,
     },
+    value: {
+      type: String,
+      required: false,
+      default: "",
+    },
+    skeleton: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
   },
 
   data() {
     return {
-      value: "",
       isCorrect: null,
       isFocused: false,
-      needValidation: false,
+      currentValue: null,
     };
   },
 
@@ -113,14 +128,12 @@ export default {
       this.isFocused = true;
     },
     focusout() {
+      this.currentValue = this.currentValue.trim();
       this.isFocused = false;
-      this.value = this.value.trim();
-      this.needValidation = this.value.length > 0;
       this.validate();
     },
 
     validate() {
-      if (!this.needValidation) return;
       this.isCorrect =
         this.validateRequired() &&
         this.validateAlphabetic() &&
@@ -132,54 +145,72 @@ export default {
         this.validateCustom();
     },
 
+    changed() {
+      this.validate();
+      this.$emit("input", this.currentValue);
+    },
+
     validateRequired() {
       if (!this.required) return true;
-      return this.value?.length > 0;
+      return this.currentValue.length > 0;
     },
     validateAlphabetic() {
       if (!this.alphabetic) return true;
-      return /\w+/.test(this.value);
+      return /\w+/.test(this.currentValue);
     },
     validateNumeric() {
       if (!this.numeric) return true;
-      return /\d+/.test(this.value);
+      return /\d+/.test(this.currentValue);
     },
     validateMinLength() {
       if (!this.minLength) return true;
-      return this.value?.length > this.minLength;
+      return this.currentValue.length > this.minLength;
     },
     validateMaxLength() {
       if (!this.maxLength) return true;
-      return this.value?.length < this.maxLength;
+      return this.currentValue.length < this.maxLength;
     },
     validatePhone() {
       if (!this.phone) return true;
       return /^((?:\+7|[78])[ \-(]{0,2}9\d{2}[ \-)]{0,2}\d{3}[ -]?\d{2}[ -]?\d{2})$/.test(
-        this.value
+        this.currentValue
       );
     },
     validateEmail() {
       if (!this.email) return true;
       // RFC 2822 standard email validation
-      return /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/.test(
-        this.value
+      return /^[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9A-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$/.test(
+        this.currentValue
       );
     },
     validateCustom() {
       if (!this.validator) return true;
       if (Array.isArray(this.validator)) {
         return this.validator.reduce(
-          (acc, validator) => acc && validator(this.value),
+          (acc, validator) => acc && validator(this.currentValue),
           true
         );
       }
-      return this.validator(this.value);
+      return this.validator(this.currentValue);
+    },
+
+    setValue(value) {
+      this.currentValue = value;
+      this.validate();
     },
   },
 
+  components: {
+    skeleton: Skeleton,
+  },
+
+  mounted() {
+    this.currentValue = this.value;
+  },
+
   watch: {
-    value: function () {
-      this.validate();
+    value: function (current) {
+      this.setValue(current);
     },
   },
 };

@@ -7,7 +7,9 @@
 </template>
 
 <script>
-import { setStyleProperty } from "../../helpers/functions.mjs";
+import helpers from "@/helpers/functions.mjs";
+
+const setStyleProperty = helpers.setStyleProperty;
 
 export default {
   name: "SmoothBackground",
@@ -22,14 +24,25 @@ export default {
       required: false,
       default: "var(--red)",
     },
+    borderRadius: {
+      type: String,
+      required: false,
+      default: "0",
+    },
   },
 
   mounted() {
     if (!this.$refs.background) return;
-    setStyleProperty(this.$refs.background, {
-      property: "background",
-      value: this.background,
-    });
+    setStyleProperty(this.$refs.background, [
+      {
+        property: "background",
+        value: this.background,
+      },
+      {
+        property: "border-radius-background",
+        value: this.borderRadius,
+      },
+    ]);
   },
 
   updated() {

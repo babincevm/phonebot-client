@@ -8,4 +8,9 @@ export default {
     console.log(data);
     commit("setUserData", data);
   },
+
+  async fetchProfile({ commit }) {
+    let data = await User.getProfile();
+    commit("setUserData", data);
+  },
 };

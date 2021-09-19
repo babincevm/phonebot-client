@@ -1,5 +1,5 @@
 <template>
-  <component :is="layout" id="app" :nav-links="links"></component>
+  <component :is="layout" id="app"></component>
 </template>
 
 <script>
@@ -11,21 +11,12 @@ export default {
     layout() {
       return `${this.$route.meta.layout || "main"}-layout`;
     },
-
-    links() {
-      return this.$router.options.routes.reduce((acc, route) => {
-        route.meta.useInMenu && acc.push(route);
-        return acc;
-      }, []);
-    },
   },
 
   components: {
     "main-layout": MainLayout,
     "empty-layout": EmptyLayout,
   },
-
-  updated() {},
 };
 </script>
 

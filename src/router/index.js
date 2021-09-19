@@ -1,60 +1,99 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-// import Home from "../views/Home.vue";
-// import Cabinet from "../views/Cabinet";
-// import UserOthers from "../views/UserOthers";
-// import NotFound from "../views/NotFound";
+import Home from "../views/Home.vue";
+import Profile from "../views/Cabinet/Profile";
+import UserOthers from "../views/UserOthers";
+import NotFound from "../views/NotFound";
+import UIFormComponents from "@/views/UI/UIFormComponents";
+import ChildRouterView from "@/views/ChildRouterView";
+import Authorization from "@/views/Auth/Authorization";
+import Diagnosis from "@/views/Diagnosis/Diagnosis";
 
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: "/",
-    name: "Главная",
-    component: () => import(/* webpackChunkName: "Home" */ "../views/Home.vue"),
+    name: "home",
+    component: Home,
     meta: {
       layout: "main",
       useInMenu: true,
       requiresAuth: true,
+      menuText: "Главная",
     },
   },
   {
-    path: "/cabinet/",
-    name: "Личный кабинет",
-    component: () =>
-      import(/* webpackChunkName: "Cabinet" */ "../views/Cabinet"),
+    path: "/cabinet",
+    component: ChildRouterView,
     meta: {
       layout: "main",
       useInMenu: true,
       requiresAuth: true,
+      menuText: "Личный кабинет",
     },
     children: [
       {
+        path: "",
+        name: "cabinet.profile",
+        component: Profile,
+        meta: {
+          menuText: "Профиль",
+        },
+      },
+      {
+        path: "diagnosis",
+        name: "cabinet.quiz",
+        component: Diagnosis,
+        meta: {
+          menuText: "Диагностика",
+        },
+      },
+      {
         path: "other",
-        name: "Другое",
-        component: () =>
-          import(/* webpackChunkName: "UserOthers" */ "../views/UserOthers"),
+        name: "cabinet.other",
+        component: UserOthers,
+        meta: {
+          menuText: "Другое",
+        },
       },
     ],
   },
   {
-    path: "/auth/",
-    name: "авторизация",
-    component: () =>
-      import(/* webpackChunkName: "Auth" */ "../views/Auth/Auth"),
+    path: "/auth",
+    name: "auth",
+    component: Authorization,
     meta: {
-      // layout: "empty",
-      useInMenu: false,
       requiresAuth: false,
       layout: "empty",
     },
   },
   {
+    path: "/ui",
+    name: "components",
+    component: ChildRouterView,
+    meta: {
+      useInMenu: true,
+      requiresAuth: false,
+      layout: "main",
+      menuText: "Компоненты",
+    },
+    children: [
+      {
+        path: "",
+        name: "components.index",
+        component: UIFormComponents,
+        meta: {
+          menuText: "Формы",
+        },
+      },
+    ],
+  },
+  {
     path: "/404",
     alias: "*",
     name: "404",
-    component: () =>
-      import(/* webpackChunkName: "NotFound" */ "../views/NotFound"),
+    component: NotFound,
     meta: {
       useInMenu: false,
       requiresAuth: true,

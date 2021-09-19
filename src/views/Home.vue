@@ -206,11 +206,28 @@
     delectus, ducimus et fugiat ipsa ipsum nemo nesciunt nobis provident rem
     repudiandae rerum tempore unde ut vero voluptates! Magnam officiis quas sint
     vel voluptatem.
+    <info
+      :is-open="isOpen"
+      @close="isOpen = false"
+      position="br"
+      animation="ttb"
+      >Lorem ipsum dolor sit amet.</info
+    >
   </section>
 </template>
 
 <script>
+import CornerPopup from "@/components/UIComponents/Popups/CornerPopup/CornerPopup";
+
 export default {
   name: "Home",
+  components: {
+    info: CornerPopup,
+  },
+  data() {
+    return {
+      isOpen: false,
+    };
+  },
 };
 </script>

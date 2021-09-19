@@ -1,13 +1,17 @@
 <template>
   <header class="header">
-    <div class="header__wrapper">
-      <nav-links :nav-links="navLinks"></nav-links>
+    <div class="header__links-wrapper">
+      <nav-links
+        v-if="navLinks.length > 0"
+        :nav-links="navLinks"
+        type="horizontal"
+      ></nav-links>
     </div>
   </header>
 </template>
 
 <script>
-import HorizontalNavLinks from "./HorizontalNavLinks";
+import NavLinks from "../NavLinks/NavLinks";
 
 export default {
   name: "PHeader",
@@ -19,7 +23,7 @@ export default {
   },
 
   components: {
-    "nav-links": HorizontalNavLinks,
+    "nav-links": NavLinks,
   },
 };
 </script>

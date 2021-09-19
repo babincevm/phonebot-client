@@ -1,0 +1,32 @@
+.smooth {
+  &-background {
+    position: absolute;
+    top: var(--top);
+    left: var(--left);
+    height: var(--height);
+    width: var(--width);
+    background-color: var(--background);
+    border-radius: var(--border-radius-background);
+    transition: all var(--transition-timing);
+
+    &__container {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    &__wrapper {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+  }
+}

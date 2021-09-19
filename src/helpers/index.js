@@ -1,3 +1,8 @@
-import { setStyleProperty } from "./functions.mjs";
+import functions from "./functions.mjs";
+import { setPolyfills } from "./polyfills";
 
-export default { setStyleProperty };
+export default {
+  setStyleProperty: functions.setStyleProperty,
+  setPolyfills,
+  debounce: functions.debounce,
+};

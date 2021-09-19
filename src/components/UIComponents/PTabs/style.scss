@@ -1,0 +1,23 @@
+.tabs {
+  position: relative;
+  height: 50px;
+  &__list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: 100%;
+  }
+
+  &__tab {
+    width: auto;
+  }
+
+  &__active-background {
+    position: absolute;
+    top: var(--top);
+    bottom: var(--bottom);
+    right: var(--right);
+    left: var(--left);
+    background-color: var(--red);
+    z-index: 1;
+  }
+}

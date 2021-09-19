@@ -1,11 +1,18 @@
 <template>
-  <button class="button" :type="type" @click="$emit('click', $event)">
-    <slot></slot>
-  </button>
+  <div class="button__container">
+    <skeleton v-if="skeleton"></skeleton>
+    <button v-else class="button" :type="type" @click="$emit('click', $event)">
+      <slot></slot>
+    </button>
+  </div>
 </template>
 
 <script>
-import helpers from "@/helpers/";
+import helpers from "@/helpers/functions.mjs";
+import Skeleton from "@/components/UIComponents/Skeleton/Skeleton";
+
+const setStyleProperty = helpers.setStyleProperty;
+
 export default {
   name: "PButton",
   props: {
@@ -49,11 +56,16 @@ export default {
       required: false,
       default: "button",
     },
+    skeleton: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
   },
 
   methods: {
     setProps() {
-      helpers.setStyleProperty(this.$el, [
+      setStyleProperty(this.$el, [
         {
           property: "button-width",
           value: this.size ?? this.width,
@@ -84,6 +96,10 @@ export default {
 
   updated() {
     this.setProps();
+  },
+
+  components: {
+    skeleton: Skeleton,
   },
 };
 </script>

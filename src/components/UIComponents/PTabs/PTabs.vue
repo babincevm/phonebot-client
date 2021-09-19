@@ -16,8 +16,8 @@
 </template>
 
 <script>
-import PButton from "./PButton";
-import SmoothBackground from "./SmoothBackground";
+import PButton from "../PButton/PButton";
+import SmoothBackground from "../SmoothBackground/SmoothBackground";
 export default {
   name: "PTabs",
   components: {

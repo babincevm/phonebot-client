@@ -22,9 +22,11 @@
 </template>
 
 <script>
-import PButton from "../UIComponents/PButton";
-import { setStyleProperty } from "../../helpers/functions.mjs";
-import VerticalNavLinks from "./VerticalNavLinks";
+import PButton from "../../UIComponents/PButton/PButton";
+import helpers from "@/helpers/functions.mjs";
+import NavLinks from "../NavLinks/NavLinks";
+
+const setStyleProperty = helpers.setStyleProperty;
 
 export default {
   name: "PDrawer",
@@ -44,7 +46,7 @@ export default {
 
   components: {
     "p-button": PButton,
-    "p-navigation": VerticalNavLinks,
+    "p-navigation": NavLinks,
   },
 
   methods: {
@@ -53,6 +55,7 @@ export default {
         property: "left",
         value: this.isOpen ? `-${this.$el.clientWidth}px` : "0",
       });
+      document.body.classList.toggle("no-scroll");
       this.isOpen = !this.isOpen;
     },
   },
