@@ -84,7 +84,11 @@ export default {
         },
         {
           property: "border-radius",
-          value: this.circle ? "50%" : this.rounded ? "20%" : "0",
+          value: this.circle
+            ? "50%"
+            : this.rounded
+            ? "20%"
+            : "var(--border-radius-px)",
         },
       ]);
     },

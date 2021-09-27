@@ -69,3 +69,26 @@
     }
   }
 }
+
+.scale {
+  &-enter {
+    transform: scale(0);
+    &-active {
+      transition: var(--transition-timing);
+      transform-origin: var(--scale-transform-origin);
+    }
+    &-to {
+      transform: scale(1);
+    }
+  }
+  &-leave {
+    transform: scale(1);
+    &-active {
+      transition: var(--transition-timing);
+      transform-origin: var(--scale-transform-origin);
+    }
+    &-to {
+      transform: scale(0);
+    }
+  }
+}

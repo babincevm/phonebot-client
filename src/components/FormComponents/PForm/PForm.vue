@@ -40,6 +40,7 @@
 <script>
 import TextInput from "../TextInput/TextInput";
 import PButton from "../../UIComponents/PButton/PButton";
+import PCalendar from "../PCalendar/PCalendar";
 
 export default {
   name: "PForm",
@@ -71,6 +72,9 @@ export default {
           case "textarea": {
             return "textarea-input";
           }
+          case "date": {
+            return "date-input";
+          }
           default: {
             return "text-input";
           }
@@ -97,6 +101,7 @@ export default {
   components: {
     "text-input": TextInput,
     "submit-button": PButton,
+    "date-input": PCalendar,
   },
 
   methods: {

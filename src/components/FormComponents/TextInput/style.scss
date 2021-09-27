@@ -7,6 +7,7 @@
   font-size: 18px;
   color: var(--dark);
   transition: all var(--transition-timing);
+  min-height: 50px;
 
   &__container {
     width: 100%;

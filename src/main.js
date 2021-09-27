@@ -7,6 +7,15 @@ import helpers from "./helpers";
 
 Vue.config.productionTip = false;
 helpers.setPolyfills();
+let y = {
+  a: {
+    b: "b",
+    c: "c",
+  },
+  d: "d",
+};
+y.flatten();
+console.log(y);
 
 new Vue({
   router,

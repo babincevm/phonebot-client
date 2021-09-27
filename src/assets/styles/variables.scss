@@ -1,17 +1,46 @@
-:root {
-  --green: #52ab98;
-  --red: #f76c6c;
-  --green-light: #52ab98;
-  --orange: #EB9532;
-  --purple: #7E3661;
-  --dark: #333;
-  --light: #f2f2f2;
-  --gray: #949494;
-  --light-gray: #cccccccc;;
+@import "functions";
 
+$colors: (
+        "pink": #E20071,
+        "blue": #00A3DA,
+        "gray": #939394,
+        "white": #FFFFFF,
+        "black": #1B1B1B,
+        "green": #52AB98,
+        "green-light": #52AB98,
+        "red": #F76C6C,
+        "orange": #EB9532,
+        "purple": #7E3661,
+        "dark": #333333,
+        "light": #F2F2F2,
+        "light-gray": #CCCCCC
+);
+
+:root {
+  // colors
+  @if $colors {
+    @each $key, $value in $colors {
+      --#{$key}: #{$value};
+      --#{$key}--rgb: #{HexToRGB($value)};
+    }
+  }
+
+  // transition
   --transition-timing: .5s;
   --transition-function: ease;
 
+  // border-radius
   --border-radius: 10%;
   --border-radius-px: 10px;
+
+  // text sizes
+  --text-base-size: 1em;
+  --text-scale-ratio: 1.2;
+  --text-xs: calc((1em / var(--text-scale-ratio)) / var(--text-scale-ratio));
+  --text-sm: calc(var(--text-xs) * var(--text-scale-ratio));
+  --text-md: calc(var(--text-sm) * var(--text-scale-ratio) * var(--text-scale-ratio));
+  --text-lg: calc(var(--text-md) * var(--text-scale-ratio));
+  --text-xl: calc(var(--text-lg) * var(--text-scale-ratio));
+  --text-xxl: calc(var(--text-xl) * var(--text-scale-ratio));
+  --text-xxxl: calc(var(--text-xxl) * var(--text-scale-ratio));
 }

@@ -20,7 +20,7 @@
         ref="input"
         :placeholder="placeholder"
         class="input"
-        @input="changed"
+        @input="input"
         @focusin="focus"
         @focusout="focusout"
         v-model="currentValue"
@@ -103,8 +103,18 @@ export default {
       required: false,
       default: false,
     },
+    min: {
+      type: Number,
+      required: false,
+      default: null,
+    },
+    max: {
+      type: Number,
+      required: false,
+      default: null,
+    },
     value: {
-      type: String,
+      type: [String, Number],
       required: false,
       default: "",
     },
@@ -138,6 +148,8 @@ export default {
         this.validateRequired() &&
         this.validateAlphabetic() &&
         this.validateNumeric() &&
+        this.validateMinValue() &&
+        this.validateMaxValue() &&
         this.validateMinLength() &&
         this.validateMaxLength() &&
         this.validateEmail() &&
@@ -145,7 +157,7 @@ export default {
         this.validateCustom();
     },
 
-    changed() {
+    input() {
       this.validate();
       this.$emit("input", this.currentValue);
     },
@@ -156,11 +168,11 @@ export default {
     },
     validateAlphabetic() {
       if (!this.alphabetic) return true;
-      return /\w+/.test(this.currentValue);
+      return !/\d+/.test(this.currentValue);
     },
     validateNumeric() {
       if (!this.numeric) return true;
-      return /\d+/.test(this.currentValue);
+      return !/\D+/.test(this.currentValue);
     },
     validateMinLength() {
       if (!this.minLength) return true;
@@ -194,8 +206,18 @@ export default {
       return this.validator(this.currentValue);
     },
 
+    validateMinValue() {
+      if (!this.min) return true;
+      return this.currentValue > this.min;
+    },
+    validateMaxValue() {
+      if (!this.max) return true;
+      return this.currentValue < this.max;
+    },
+
     setValue(value) {
-      this.currentValue = value;
+      this.currentValue = value?.toString();
+      if (!this.currentValue) return;
       this.validate();
     },
   },
@@ -205,7 +227,7 @@ export default {
   },
 
   mounted() {
-    this.currentValue = this.value;
+    this.setValue(this.value?.toString());
   },
 
   watch: {

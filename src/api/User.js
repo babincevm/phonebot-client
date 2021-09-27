@@ -23,19 +23,8 @@ class User extends HTTP {
   }
 
   async getProfile() {
-    // https://jsonplaceholder.typicode.com/users/1
-    try {
-      let data = await fetch("https://jsonplaceholder.typicode.com/users/1", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      return await data.json();
-    } catch (e) {
-      console.log(e);
-    }
+    let data = await this.send({ url: "/profile/" });
+    return data.result;
   }
 }
 

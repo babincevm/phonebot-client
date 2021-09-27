@@ -1,38 +1,36 @@
 <template>
-  <section class="container">
-    <div class="user-info__container">
-      <div class="user-info__wrapper">
-        <user-form
-          method="post"
-          @submit="changeUserData"
-          :inputs="inputs"
-          :skeleton="isLoading"
-        >
-          <template #buttons>
-            <p-button
-              type="submit"
-              inner-color="var(--green)"
-              height="50px"
-              class="form__submit-button"
-              :skeleton="isLoading"
-            >
-              Сохранить
-            </p-button>
-            <p-button
-              type="button"
-              inner-color="var(--red)"
-              height="50px"
-              class="form__submit-button"
-              :skeleton="isLoading"
-              @click="setInputValues"
-            >
-              Сбросить
-            </p-button>
-          </template>
-        </user-form>
-      </div>
+  <div class="user-info__container">
+    <div class="user-info__wrapper">
+      <user-form
+        method="post"
+        @submit="changeUserData"
+        :inputs="inputs"
+        :skeleton="isLoading"
+      >
+        <template #buttons>
+          <p-button
+            type="submit"
+            inner-color="var(--green)"
+            height="50px"
+            class="form__submit-button"
+            :skeleton="isLoading"
+          >
+            Сохранить
+          </p-button>
+          <p-button
+            type="button"
+            inner-color="var(--red)"
+            height="50px"
+            class="form__submit-button"
+            :skeleton="isLoading"
+            @click="setInputValues"
+          >
+            Сбросить
+          </p-button>
+        </template>
+      </user-form>
     </div>
-  </section>
+  </div>
 </template>
 
 <script>
@@ -73,6 +71,22 @@ export default {
           required: true,
           phone: true,
         },
+        {
+          label: "Возраст",
+          name: "age",
+          value: null,
+          required: true,
+          numeric: true,
+          min: 5,
+          max: 100,
+        },
+        {
+          label: "Дата рождения",
+          type: "date",
+          name: "birthdate",
+          value: null,
+          required: true,
+        },
       ],
     };
   },
@@ -85,13 +99,17 @@ export default {
     },
 
     setInputValues() {
-      for (let i = this.inputs.length; i--; i >= 0) {
-        this.$set(
-          this.inputs[i],
-          "value",
-          this.getUserData[this.inputs[i].name]
-        );
-      }
+      this.inputs.forEach((input) => {
+        switch (input.type) {
+          case "date": {
+            this.$set(input, "value", new Date(this.getUserData[input.name]));
+            break;
+          }
+          default: {
+            this.$set(input, "value", this.getUserData[input.name]);
+          }
+        }
+      });
     },
   },
 
